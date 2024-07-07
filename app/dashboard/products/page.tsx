@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import prisma from "@/lib/db";
-import { EllipsisIcon, PlusCircleIcon, UserIcon } from "lucide-react";
+import { BadgePoundSterlingIcon, EllipsisIcon, PlusCircleIcon, UserIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -68,7 +68,7 @@ export default async function ProductsPage() {
                     <p className="font-semibold ">{product.id}</p>
                     <p className="text-xs text-muted-foreground">SKU: {product.sku}</p>
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="relative">
                     <Image
                       src={product.images[0]}
                       height={75}
@@ -76,6 +76,9 @@ export default async function ProductsPage() {
                       alt={product.name}
                       className="h-[75px] w-[75px] object-cover"
                     />
+                    {product.isFeatured && (
+                      <BadgePoundSterlingIcon className="absolute top-2 right-10 h-6 w-6 bg-purple-500 rounded-full text-white" />
+                    )}
                   </TableCell>
                   <TableCell>{product.name}</TableCell>
                   <TableCell>{product.stock}</TableCell>
@@ -96,8 +99,12 @@ export default async function ProductsPage() {
                       <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Product actions</DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>Edit</DropdownMenuItem>
-                        <DropdownMenuItem>Delete</DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href={`/dashboard/products/${product.id}`}>Edit</Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href={`/dashboard/products/${product.id}/delete`}>Delete</Link>
+                        </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </TableCell>

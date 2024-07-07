@@ -3,8 +3,9 @@
 import { useFormStatus } from "react-dom";
 import { Button } from "./ui/button";
 import { Loader2Icon } from "lucide-react";
+import { cn } from "@/lib/utils";
 
-export function SubmitButton() {
+export function SubmitButton({ label, className }: { label?: string; className?: string }) {
   const { pending } = useFormStatus();
 
   return (
@@ -17,7 +18,9 @@ export function SubmitButton() {
           </Button>
         </div>
       ) : (
-        <Button type="submit">Create product</Button>
+        <Button type="submit" className={cn(className)}>
+          {label || "Create product"}
+        </Button>
       )}
     </>
   );

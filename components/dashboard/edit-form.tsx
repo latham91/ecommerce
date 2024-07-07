@@ -1,28 +1,45 @@
 "use client";
 
-import { createProduct } from "@/actions";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
-import { Textarea } from "@/components/ui/textarea";
-import { UploadDropzone } from "@/lib/uploadthing";
-import { ChevronLeftIcon, XCircleIcon } from "lucide-react";
 import Link from "next/link";
+import { Button } from "../ui/button";
+import { ChevronLeftIcon, XCircleIcon } from "lucide-react";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card";
+import { Label } from "../ui/label";
+import { Input } from "../ui/input";
+import { Textarea } from "../ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import { Switch } from "../ui/switch";
+import Image from "next/image";
+import { UploadDropzone } from "@/lib/uploadthing";
+import { useState } from "react";
 import { useFormState } from "react-dom";
-import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
 import { productSchema } from "@/lib/zodSchemas";
-import { useState } from "react";
-import Image from "next/image";
+import { updateProduct } from "@/actions";
+import { useForm } from "@conform-to/react";
 import { categories } from "@/lib/categories";
-import { SubmitButton } from "@/components/submit-button";
+import { SubmitButton } from "../submit-button";
+import { $Enums } from "@prisma/client";
 
-export default function CreateProductPage() {
-  const [images, setImages] = useState<string[]>([]);
-  const [lastResult, action] = useFormState(createProduct, undefined);
+interface EditFormProps {
+  data: {
+    id: string;
+    name: string;
+    description: string;
+    status: $Enums.ProductStatus;
+    price: string;
+    images: string[];
+    stock: number;
+    isFeatured: boolean;
+    sku: string;
+    category: $Enums.Category;
+    createdAt: Date;
+  };
+}
+
+export function EditForm({ data }: EditFormProps) {
+  const [images, setImages] = useState<string[]>(data.images);
+  const [lastResult, action] = useFormState(updateProduct, undefined);
   const [form, fields] = useForm({
     lastResult,
 
@@ -38,8 +55,10 @@ export default function CreateProductPage() {
     setImages(images.filter((_, i) => i !== index));
   };
 
+  console.log(fields.isFeatured.value);
   return (
     <form id={form.id} onSubmit={form.onSubmit} action={action}>
+      <input type="hidden" name="productId" value={data.id} />
       <div className="flex items-center gap-4">
         <Button variant={"outline"} size={"icon"} asChild>
           <Link href="/dashboard/products">
@@ -47,15 +66,13 @@ export default function CreateProductPage() {
           </Link>
         </Button>
 
-        <h1 className="text-xl font-semibold tracking-tight">Add a new product</h1>
+        <h1 className="text-xl font-semibold tracking-tight">Edit your product</h1>
       </div>
 
       <Card className="mt-5">
         <CardHeader>
           <CardTitle>Product details</CardTitle>
-          <CardDescription className="text-sm text-muted-foreground">
-            Fill in the details of your new product
-          </CardDescription>
+          <CardDescription className="text-sm text-muted-foreground">Update your products details below</CardDescription>
         </CardHeader>
 
         <CardContent>
@@ -69,7 +86,7 @@ export default function CreateProductPage() {
                 type="text"
                 key={fields.name.key}
                 name={fields.name.name}
-                defaultValue={fields.name.initialValue}
+                defaultValue={data.name}
                 className="w-full"
                 placeholder="Product name"
               />
@@ -83,7 +100,7 @@ export default function CreateProductPage() {
               <Textarea
                 key={fields.description.key}
                 name={fields.description.name}
-                defaultValue={fields.description.initialValue}
+                defaultValue={data.description}
                 placeholder="Enter your product description here"
               />
             </div>
@@ -93,12 +110,7 @@ export default function CreateProductPage() {
                 SKU
                 <span className="text-red-500 text-xs animate-pulse italic">{fields.sku.errors}</span>
               </Label>
-              <Input
-                key={fields.sku.key}
-                name={fields.sku.name}
-                defaultValue={fields.sku.initialValue}
-                placeholder="Enter SKU code"
-              />
+              <Input key={fields.sku.key} name={fields.sku.name} defaultValue={data.sku} placeholder="Enter SKU code" />
             </div>
 
             <div className="flex flex-col gap-3">
@@ -109,7 +121,7 @@ export default function CreateProductPage() {
               <Input
                 key={fields.price.key}
                 name={fields.price.name}
-                defaultValue={fields.price.initialValue}
+                defaultValue={data.price}
                 type="number"
                 step="0.01"
                 placeholder="£125.99"
@@ -122,7 +134,7 @@ export default function CreateProductPage() {
                 <span className="text-red-500 text-xs animate-pulse italic">{fields.category.errors}</span>
               </Label>
 
-              <Select key={fields.category.key} name={fields.category.name} defaultValue={fields.category.initialValue}>
+              <Select key={fields.category.key} name={fields.category.name} defaultValue={data.category}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select category" />
                 </SelectTrigger>
@@ -144,7 +156,7 @@ export default function CreateProductPage() {
               <Input
                 key={fields.stock.key}
                 name={fields.stock.name}
-                defaultValue={fields.stock.initialValue}
+                defaultValue={data.stock}
                 type="number"
                 placeholder="100"
               />
@@ -155,11 +167,7 @@ export default function CreateProductPage() {
                 Featured
                 <span className="text-red-500 text-xs animate-pulse italic">{fields.isFeatured.errors}</span>
               </Label>
-              <Switch
-                key={fields.isFeatured.key}
-                name={fields.isFeatured.name}
-                defaultValue={fields.isFeatured.initialValue}
-              />
+              <Switch key={fields.isFeatured.key} name={fields.isFeatured.name} defaultChecked={data.isFeatured} />
             </div>
 
             <div className="flex flex-col gap-3">
@@ -167,7 +175,7 @@ export default function CreateProductPage() {
                 Status
                 <span className="text-red-500 text-xs animate-pulse italic">{fields.status.errors}</span>
               </Label>
-              <Select key={fields.status.key} name={fields.status.name} defaultValue={fields.status.initialValue}>
+              <Select key={fields.status.key} name={fields.status.name} defaultValue={data.status}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select status" />
                 </SelectTrigger>
@@ -236,7 +244,7 @@ export default function CreateProductPage() {
         </CardContent>
 
         <CardFooter>
-          <SubmitButton />
+          <SubmitButton label="Update product" />
         </CardFooter>
       </Card>
     </form>
