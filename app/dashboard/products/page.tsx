@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import prisma from "@/lib/db";
+import { cn } from "@/lib/utils";
 import { BadgePoundSterlingIcon, EllipsisIcon, PlusCircleIcon, UserIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -84,7 +85,18 @@ export default async function ProductsPage() {
                   <TableCell>{product.stock}</TableCell>
                   <TableCell>{new Date(product.createdAt).toLocaleDateString()}</TableCell>
                   <TableCell>
-                    <span className="bg-emerald-500 text-secondary py-1 px-3 rounded-full">
+                    <span
+                      className={cn(
+                        product.status === "published"
+                          ? "bg-emerald-500"
+                          : product.status === "draft"
+                          ? "bg-orange-400"
+                          : product.status === "archived"
+                          ? "bg-red-700"
+                          : "bg-slate-500",
+                        "text-secondary py-1 px-3 rounded-full"
+                      )}
+                    >
                       {product.status.charAt(0).toUpperCase() + product.status.slice(1).toLocaleLowerCase()}
                     </span>
                   </TableCell>

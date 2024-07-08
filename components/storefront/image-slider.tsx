@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Button } from "../ui/button";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { useState } from "react";
+import { cn } from "@/lib/utils";
 
 interface ImageSliderProps {
   images: string[];
@@ -18,6 +19,10 @@ export function ImageSlider({ images }: ImageSliderProps) {
 
   const handleNext = () => {
     setMainImageIndex((prevIdx) => (prevIdx === images.length - 1 ? 0 : prevIdx + 1));
+  };
+
+  const handleImageClick = (index: number) => {
+    setMainImageIndex(index);
   };
 
   return (
@@ -37,8 +42,20 @@ export function ImageSlider({ images }: ImageSliderProps) {
 
       <div className="grid grid-cols-5 gap-4">
         {images.map((image, index) => (
-          <div key={index}>
-            <Image src={image} alt="Product image" width={125} height={125} className="object-cover w-[125px] h-[125px]" />
+          <div
+            key={index}
+            className={cn(
+              index === mainImageIndex ? "border-2 border-primary" : "border border-gray-200",
+              "relative overflow-hidden rounded-md cursor-pointer"
+            )}
+          >
+            <Image
+              src={image}
+              alt="Product image"
+              width={100}
+              height={100}
+              className="object-cover rounded-md w-[100px] h-[100px]"
+            />
           </div>
         ))}
       </div>

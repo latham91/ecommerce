@@ -18,8 +18,6 @@ async function getBanners() {
 export async function Hero() {
   const banners = await getBanners();
 
-  console.log(banners);
-
   return (
     <Carousel
       className="py-7 sm:py-14"
