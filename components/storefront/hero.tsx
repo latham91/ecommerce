@@ -22,7 +22,7 @@ export async function Hero() {
 
   return (
     <Carousel
-      className="mt-5"
+      className="py-7 sm:py-14"
       opts={{
         loop: true,
       }}
@@ -35,11 +35,11 @@ export async function Hero() {
                 src={banner.image}
                 alt={banner.title}
                 fill
-                className="object-cover object-left-top w-full h-full rounded-md transition-transform duration-500 hover:scale-105"
+                className="object-cover object-left-top w-full h-full rounded-md transition-transform duration-500 hover:scale-110"
                 priority={true}
               />
 
-              <div className="absolute bottom-10 right-16 bg-opacity-75 bg-primary p-5 rounded-xl shadow-lg space-y-2">
+              <div className="absolute bottom-10 left-0 right-0 bg-opacity-75 bg-gradient-to-r from-transparent via-primary/80 to-primary backdrop-blur-sm p-5 space-y-2">
                 <div className="mb-5">
                   <h1 className="text-xl lg:text-5xl font-bold text-secondary text-right">{banner.title}</h1>
                   <p className="text-muted text-right">{banner.subtitle}</p>

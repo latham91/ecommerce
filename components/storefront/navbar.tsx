@@ -6,6 +6,7 @@ import { ShoppingBagIcon } from "lucide-react";
 import UserDropdown from "./user-dropdown";
 import { Button } from "../ui/button";
 import { LoginLink, RegisterLink } from "@kinde-oss/kinde-auth-nextjs/components";
+import { Input } from "../ui/input";
 
 export async function Navbar() {
   const { getUser } = getKindeServerSession();
@@ -41,11 +42,11 @@ export async function Navbar() {
           </div>
         ) : (
           <div className="hidden md:flex md:flex-1 md:items-center md:justify-end md:space-x-2">
-            <Button size="sm" variant="outline" asChild>
+            <Button variant="outline" asChild>
               <LoginLink>Sign in</LoginLink>
             </Button>
             <span className="h-6 w-px bg-gray-200"></span>
-            <Button size="sm" asChild>
+            <Button asChild>
               <RegisterLink>Register</RegisterLink>
             </Button>
           </div>
