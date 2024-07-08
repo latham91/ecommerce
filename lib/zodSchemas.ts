@@ -11,3 +11,9 @@ export const productSchema = z.object({
   category: z.enum(["tshirts", "hoodies", "jeans", "jackets", "workwear", "shoes", "accessories"]),
   sku: z.string(),
 });
+
+export const bannerSchema = z.object({
+  title: z.string(),
+  subtitle: z.string(),
+  image: z.string(),
+});

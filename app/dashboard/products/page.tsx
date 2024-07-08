@@ -74,7 +74,7 @@ export default async function ProductsPage() {
                       height={75}
                       width={75}
                       alt={product.name}
-                      className="h-[75px] w-[75px] object-cover"
+                      className="h-[75px] w-[75px] rounded-md object-cover"
                     />
                     {product.isFeatured && (
                       <BadgePoundSterlingIcon className="absolute top-2 right-10 h-6 w-6 bg-purple-500 rounded-full text-white" />
