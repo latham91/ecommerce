@@ -1,3 +1,9 @@
+import { Hero } from "@/components/storefront/hero";
+
 export default function StoreHome() {
-  return <div>hello from storefront homepage</div>;
+  return (
+    <div>
+      <Hero />
+    </div>
+  );
 }
