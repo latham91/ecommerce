@@ -8,15 +8,15 @@ import workwear from "@/public/workwear-category.jpg";
 
 export function CategorySelection() {
   return (
-    <div className="py-7 sm:py-14">
-      <div className="flex justify-between items-center">
+    <div className="py-7">
+      <div className="flex justify-between items-center border-b-2 border-dashed pb-5">
         <h2 className="text-3xl font-extrabold tracking-tight">Shop by Category</h2>
         <Link className="text-sm text-primary hover:text-primary/80" href="/products/all">
           Browse all products &rarr;
         </Link>
       </div>
 
-      <div className="mt-6 grid grid-cols-1 gap-y-6 sm:grid-cols-2 md:grid-cols-4 sm:grid-rows-3 sm:gap-x-6 lg:gap-8">
+      <div className="mt-6 grid grid-cols-1 gap-y-6 sm:grid-cols-2 md:grid-cols-4 sm:grid-rows-2 sm:gap-x-6 lg:gap-8">
         <div className="group aspect-w-2 aspect-h-1 rounded-md overflow-hidden sm:aspect-w-1 md:row-span-2 md:col-span-2 sm:col-span-1">
           <Image src={all} alt="All products category image" className="object-cover" />
           <div className="bg-gradient-to-b from-transparent via-transparent to-primary opacity-55" />

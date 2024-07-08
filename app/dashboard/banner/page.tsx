@@ -57,7 +57,7 @@ export default async function BannerPage() {
 
             <TableBody>
               {banners.map((banner) => (
-                <TableRow>
+                <TableRow key={banner.id}>
                   <TableCell>
                     <Image
                       src={banner.image}

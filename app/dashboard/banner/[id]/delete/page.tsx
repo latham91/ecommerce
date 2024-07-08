@@ -16,7 +16,7 @@ export default function BannerDelete({ params }: { params: { id: string } }) {
         </CardHeader>
         <CardFooter className="w-full flex justify-between gap-24">
           <Button variant="outline" className="w-full" asChild>
-            <Link href="/dashboard/products">Cancel</Link>
+            <Link href="/dashboard/banner">Cancel</Link>
           </Button>
 
           <form action={deleteBanner} className="w-full">

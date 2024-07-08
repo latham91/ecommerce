@@ -44,7 +44,7 @@ export function ProductCard({ item }: ProductCardProps) {
           £{item.price.toString()}
         </h3>
       </div>
-      <p className="text-muted-foreground text-xs p-2">{item.description.substring(0, 125) + "..."}</p>
+      <p className="text-muted-foreground text-xs p-2 line-clamp-2">{item.description.substring(0, 125) + "..."}</p>
 
       <Button className="w-full mt-3" asChild>
         <Link href={`/product/${item.id}`}>View product</Link>

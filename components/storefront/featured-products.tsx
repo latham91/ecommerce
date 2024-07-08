@@ -19,8 +19,10 @@ export async function FeaturedProducts() {
   const products = await getFeaturedProducts();
 
   return (
-    <div className="py-7 sm:py-14">
-      <h2 className="text-3xl font-extrabold tracking-tight">Featured Products</h2>
+    <div className="py-7">
+      <div className="border-b-2 border-dashed pb-5">
+        <h2 className="text-3xl font-extrabold tracking-tight">Featured Products</h2>
+      </div>
 
       <div className="mt-5 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {products.map((product) => (
