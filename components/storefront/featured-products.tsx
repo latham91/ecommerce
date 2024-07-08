@@ -10,6 +10,7 @@ async function getFeaturedProducts() {
     orderBy: {
       createdAt: "desc",
     },
+    take: 6,
   });
 
   return products;
@@ -24,7 +25,7 @@ export async function FeaturedProducts() {
         <h2 className="text-3xl font-extrabold tracking-tight">Featured Products</h2>
       </div>
 
-      <div className="mt-5 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div className="mt-5 grid sm:grid-cols-2 lg:grid-cols-3 gap-5 gap-y-16">
         {products.map((product) => (
           <ProductCard key={product.id} item={product} />
         ))}

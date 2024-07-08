@@ -84,7 +84,7 @@ export default async function ProductsPage() {
                   <TableCell>{product.name}</TableCell>
                   <TableCell>{product.stock}</TableCell>
                   <TableCell>{new Date(product.createdAt).toLocaleDateString()}</TableCell>
-                  <TableCell>
+                  <TableCell className="text-start">
                     <span
                       className={cn(
                         product.status === "published"
@@ -116,6 +116,12 @@ export default async function ProductsPage() {
                         </DropdownMenuItem>
                         <DropdownMenuItem asChild>
                           <Link href={`/dashboard/products/${product.id}/delete`}>Delete</Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem asChild>
+                          <Link href={`/product/${product.id}`} target="_blank">
+                            View Live Listing
+                          </Link>
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>

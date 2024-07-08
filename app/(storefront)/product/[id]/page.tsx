@@ -1,5 +1,7 @@
+import { addItem } from "@/actions";
 import { FeaturedProducts } from "@/components/storefront/featured-products";
 import { ImageSlider } from "@/components/storefront/image-slider";
+import { ShoppingCartButton } from "@/components/submit-button";
 import { Button } from "@/components/ui/button";
 import prisma from "@/lib/db";
 import { ShoppingBagIcon, StarIcon } from "lucide-react";
@@ -21,6 +23,7 @@ async function getProduct(productId: string) {
 
 export default async function SingleProductPage({ params }: { params: { id: string } }) {
   const product = await getProduct(params.id);
+  const addProductToCart = addItem.bind(null, product.id);
 
   return (
     <>
@@ -47,10 +50,9 @@ export default async function SingleProductPage({ params }: { params: { id: stri
             <p className="text-base text-gray-700 mt-6">{product.description}</p>
           </div>
 
-          <Button size="lg" className="w-full mt-10">
-            <ShoppingBagIcon className="mr-2 h-5 w-5" />
-            Add to basket
-          </Button>
+          <form action={addProductToCart}>
+            <ShoppingCartButton />
+          </form>
         </div>
       </div>
 

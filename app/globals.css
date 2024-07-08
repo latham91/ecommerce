@@ -53,8 +53,17 @@
   * {
     @apply border-border;
   }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground h-screen;
+  }
+
+  .bg-pattern {
+    background-color: #ffffff00;
+    opacity: 1;
+    background-image: linear-gradient(#ff00e117 1px, transparent 1px), linear-gradient(to right, #ff00e117 1px, #ffffff 1px);
+    background-size: 80px 80px;
+    z-index: -10;
   }
 
   ::-webkit-scrollbar {
