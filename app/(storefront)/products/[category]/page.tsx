@@ -1,6 +1,6 @@
 import { ProductCard } from "@/components/storefront/product-card";
 import prisma from "@/lib/db";
-import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
 
 async function getCategory(productCategory: string) {
   switch (productCategory) {
@@ -108,7 +108,7 @@ async function getCategory(productCategory: string) {
       return { title: "Accessories", data: data };
     }
     default: {
-      return notFound();
+      return redirect("/");
     }
   }
 }

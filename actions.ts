@@ -8,6 +8,8 @@ import prisma from "./lib/db";
 import { redis } from "./lib/redis";
 import { Cart } from "./lib/interfaces";
 import { revalidatePath } from "next/cache";
+import { stripe } from "./lib/stripe";
+import Stripe from "stripe";
 
 export async function createProduct(prevState: unknown, formData: FormData) {
   const { getUser } = getKindeServerSession();
@@ -210,4 +212,72 @@ export async function addItem(productId: string) {
 
   await redis.set(`cart-${user.id}`, myCart);
   revalidatePath("/", "layout");
+}
+
+export async function deleteItem(formData: FormData) {
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
+
+  if (!user) {
+    return redirect("/api/auth/login?");
+  }
+
+  const productId = formData.get("productId");
+
+  let cart: Cart | null = await redis.get(`cart-${user.id}`);
+
+  if (cart && cart.items) {
+    const updatedCart: Cart = {
+      userId: user.id,
+      items: cart.items.filter((item) => item.id !== productId),
+    };
+
+    await redis.set(`cart-${user.id}`, updatedCart);
+  }
+
+  revalidatePath("/cart");
+}
+
+export async function checkout() {
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
+
+  if (!user) {
+    return redirect("/api/auth/login?");
+  }
+
+  let cart: Cart | null = await redis.get(`cart-${user.id}`);
+
+  if (cart && cart.items) {
+    const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = cart.items.map((item) => ({
+      price_data: {
+        currency: "gbp",
+        unit_amount: Math.round(item.price * 100),
+        tax_behavior: "exclusive",
+        product_data: {
+          name: item.name,
+          images: [item.imageString],
+        },
+      },
+      quantity: item.quantity,
+    }));
+
+    const session = await stripe.checkout.sessions.create({
+      mode: "payment",
+      line_items: lineItems,
+      success_url: "http://localhost:3000/payment/success",
+      cancel_url: "http://localhost:3000/payment/cancel",
+      tax_id_collection: {
+        enabled: true,
+      },
+      automatic_tax: {
+        enabled: true,
+      },
+      metadata: {
+        userId: user.id,
+      },
+    });
+
+    return redirect(session.url as string);
+  }
 }

@@ -8,8 +8,8 @@ import { ourFileRouter } from "./api/uploadthing/core";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Trade Embroidery - White Label Embroidery Service",
-  description: "White label embroidery for the print trade. Fast turnaround, Sign up for an account today!",
+  title: "E-Commerce Project",
+  description: "E-Commerce Project built with Next.js and Prisma",
 };
 
 export default function RootLayout({

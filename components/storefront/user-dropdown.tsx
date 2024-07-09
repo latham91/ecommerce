@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import {
@@ -34,9 +35,14 @@ export default function UserDropdown({ email, name, avatar }: UserDropdownProps)
           <p className="text-sm font-medium leading-none">{name}</p>
           <p className="text-xs leading-none text-muted-foreground">{email}</p>
         </DropdownMenuLabel>
+
+        <DropdownMenuSeparator />
+        <DropdownMenuItem asChild className="cursor-pointer">
+          <Link href="/account/orders">My orders</Link>
+        </DropdownMenuItem>
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem asChild>
+        <DropdownMenuItem asChild className="cursor-pointer">
           <LogoutLink>Sign out</LogoutLink>
         </DropdownMenuItem>
       </DropdownMenuContent>

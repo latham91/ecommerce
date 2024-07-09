@@ -19,6 +19,8 @@ model User {
   firstName String
   lastName String
   avatarUrl String?
+  
+  orders Order[]
 
   createdAt DateTime @default(now())
 }
@@ -28,7 +30,7 @@ model Product {
   name String
   description String
   status ProductStatus
-  price Decimal @db.Decimal(10, 2)
+  price Float
   images String[]
   stock Int
   isFeatured Boolean @default(false)
@@ -43,6 +45,17 @@ model Banner {
   title String
   subtitle String
   image String
+
+  createdAt DateTime @default(now())
+}
+
+model Order {
+  id    String    @id @default(dbgenerated("generate_custom_id('ORD'::text, 1::smallint, 5::smallint)"))
+  status String @default("pending")
+  amount Float
+
+  User User? @relation(fields: [userId], references: [id])
+  userId String?
 
   createdAt DateTime @default(now())
 }

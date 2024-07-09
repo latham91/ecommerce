@@ -10,21 +10,21 @@ export const navbarLinks = [
     name: "Home",
     href: "/",
   },
-  {
-    id: 1,
-    name: "Brands",
-    href: "/products/brands",
-  },
+  // {
+  //   id: 1,
+  //   name: "Brands",
+  //   href: "/products/brands",
+  // },
   {
     id: 2,
     name: "Categories",
     href: "/products/categories",
   },
-  {
-    id: 3,
-    name: "Resources",
-    href: "/resources",
-  },
+  // {
+  //   id: 3,
+  //   name: "Resources",
+  //   href: "/resources",
+  // },
 ];
 
 export function NavbarLinks() {

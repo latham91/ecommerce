@@ -6,7 +6,6 @@ import { ShoppingBagIcon } from "lucide-react";
 import UserDropdown from "./user-dropdown";
 import { Button } from "../ui/button";
 import { LoginLink, RegisterLink } from "@kinde-oss/kinde-auth-nextjs/components";
-import { Input } from "../ui/input";
 import { redis } from "@/lib/redis";
 import { Cart } from "@/lib/interfaces";
 
@@ -22,7 +21,9 @@ export async function Navbar() {
     <nav className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex items-center justify-between">
       <div className="flex items-center">
         <Link href="/">
-          <Image src={"/TELogo.svg"} alt="Logo" width={200} height={80} />
+          <h2 className="text-3xl font-extrabold">
+            Brand<span className="text-primary">Logo.</span>
+          </h2>
         </Link>
 
         <NavbarLinks />
