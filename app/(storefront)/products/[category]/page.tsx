@@ -1,6 +1,7 @@
 import { ProductCard } from "@/components/storefront/product-card";
 import prisma from "@/lib/db";
 import { redirect } from "next/navigation";
+import { unstable_noStore as noStore } from "next/cache";
 
 async function getCategory(productCategory: string) {
   switch (productCategory) {
@@ -114,6 +115,8 @@ async function getCategory(productCategory: string) {
 }
 
 export default async function CategoryPage({ params }: { params: { category: string } }) {
+  noStore();
+
   const { data, title } = await getCategory(params.category);
 
   return (

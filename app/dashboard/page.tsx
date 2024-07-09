@@ -3,6 +3,7 @@ import { DashboardStats } from "@/components/dashboard/dashboard-stats";
 import { RecentSales } from "@/components/dashboard/recent-sales";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import prisma from "@/lib/db";
+import { unstable_noStore as noStore } from "next/cache";
 
 async function getData() {
   const now = new Date();
@@ -33,6 +34,8 @@ async function getData() {
 }
 
 export default async function Dashboard() {
+  noStore();
+
   const data = await getData();
 
   return (

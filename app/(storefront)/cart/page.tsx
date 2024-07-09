@@ -5,12 +5,15 @@ import { Label } from "@/components/ui/label";
 import { Cart } from "@/lib/interfaces";
 import { redis } from "@/lib/redis";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import { ChevronLeftIcon, ChevronRightIcon, ShoppingBagIcon } from "lucide-react";
+import { ChevronLeftIcon, ShoppingBagIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { unstable_noStore as noStore } from "next/cache";
 
 export default async function ShoppingCart() {
+  noStore();
+
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 

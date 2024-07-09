@@ -16,8 +16,11 @@ import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
 import { redirect } from "next/navigation";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { AvatarFallback } from "@radix-ui/react-avatar";
+import { unstable_noStore as noStore } from "next/cache";
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
+  noStore();
+
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 

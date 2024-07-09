@@ -2,6 +2,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import prisma from "@/lib/db";
+import { unstable_noStore as noStore } from "next/cache";
 
 async function getOrders() {
   const orders = await prisma.order.findMany({
@@ -28,6 +29,8 @@ async function getOrders() {
 }
 
 export default async function OrdersPage() {
+  noStore();
+
   const orders = await getOrders();
 
   return (
