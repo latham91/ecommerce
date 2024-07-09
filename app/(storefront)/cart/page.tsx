@@ -38,7 +38,7 @@ export default async function ShoppingCart() {
             <ShoppingBagIcon className="w-10 h-10 text-primary" />
           </div>
           <h2 className="text-4xl font-extrabold mt-6">Your cart is empty</h2>
-          <p className="text-xl text-gray-600 mt-2">Looks like you haven't added anything to your cart yet.</p>
+          <p className="text-xl text-gray-600 mt-2">Looks like you haven&apos;t added anything to your cart yet.</p>
 
           <Button size="lg" className="mt-10 font-semibold text-lg" asChild>
             <Link href="/">
