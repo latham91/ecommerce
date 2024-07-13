@@ -26,7 +26,7 @@ model User {
 }
 
 model Product {
-  id    String    @id @default(dbgenerated("generate_custom_id('PD'::text, 1::smallint, 5::smallint)"))
+  id    String    @id @default(cuid())
   name String
   description String
   status ProductStatus
@@ -41,7 +41,7 @@ model Product {
 }
 
 model Banner {
-  id String @id @default(uuid())
+  id String @id @default(cuid())
   title String
   subtitle String
   image String
@@ -50,7 +50,7 @@ model Banner {
 }
 
 model Order {
-  id    String    @id @default(dbgenerated("generate_custom_id('ORD'::text, 1::smallint, 5::smallint)"))
+  id    String    @id @default(cuid())
   status String @default("pending")
   amount Float
 

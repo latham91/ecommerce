@@ -7,6 +7,7 @@ export async function POST(req: Request) {
   const body = await req.text();
 
   const signature = headers().get("Stripe-Signature") as string;
+  console.log("Event");
 
   let event;
 
@@ -19,6 +20,7 @@ export async function POST(req: Request) {
   switch (event.type) {
     case "checkout.session.completed": {
       const session = event.data.object;
+      console.log("Checkout session completed: ", session);
 
       await prisma.order.create({
         data: {
